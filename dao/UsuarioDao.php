@@ -71,6 +71,7 @@ Class UsuarioDao {
         $u->setNome($row['Nome']);
         $u->setEmail($row['Email']);
         $u->setSenha($row['Senha']);
+        $u->setIdGrupoUsuario($row['idGrupoUsuario']);
 
         return $u;
     }
