@@ -1,4 +1,5 @@
 <?php 
+namespace model;
 
 class Usuario {
 
@@ -9,7 +10,7 @@ class Usuario {
 	private $Senha;
 	private $idGrupoUsuario;
 
-	private $pdo;
+	/*private $pdo;
 
 	public function __construct($i="") {
 		$this->getInstance();
@@ -36,7 +37,7 @@ class Usuario {
 		} catch(PDOException $e) {
 			echo "Falha ao executar a sentença 001" . $e->getMessage();
 		}
-	}
+	}*/
 
 	public function getId() {
 		return $this->Id;

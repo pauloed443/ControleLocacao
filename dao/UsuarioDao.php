@@ -2,21 +2,59 @@
 namespace dao;
 
 require_once "conexao.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/ControleLocacao/model/Usuario.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "\ControleLocacao\model\Usuario.php";
 
 Class UsuarioDao {
 
 	private $pdo;
 
-	private function __construct() {
-
+	public function __construct() {
+		$this->getInstance();
 	}
 
 	public function getInstance() {
 		try {
-			$this->pdo = new PDO("mysql:dbname=leidebrink;host=localhost", 'root', '');
+			$this->pdo = new PDO("mysql:dbname=leidebrink;host=localhost:8080", "root", "");
 		} catch(PDOException $e) {
 			echo "Falha ao executar a sentença 001" . $e->getMessage();
+		}
+	}
+
+	public function salvar(Usuario $usuario) {
+		if (!empty($usuario->getId())) {
+			$sql = "UPDATE usuario SET
+								Login = ?,
+								Nome = ?,
+								Email = ?,
+								Senha = ?,
+								idGrupoUsuario = ?
+					WHERE Id = ?";
+			$sql = $this->pdo->prepare($sql);
+			$sql->execute(array(
+							$usuario->getLogin(),
+							$usuario->getNome(),
+							$usuario->getEmail(),
+							$usuario->getSenha(),
+							$usuario->getidGrupoUsuario(),
+							$usuario->getId(),
+							));
+		} else {
+			$sql = "INSERT INTO usuario(
+									Login,
+									Nome,
+									Email,
+									Senha,
+									idGrupoUsuario)
+					VALUES (?,?,?,?,?)";
+			$sql = $this->pdo->prepare($sql);
+			$sql->execute(array(
+							$usuario->getLogin(),
+							$usuario->getNome(),
+							$usuario->getEmail(),
+							$usuario->getSenha(),
+							$usuario->getidGrupoUsuario()
+							));
+			header("cadastrado!");
 		}
 	}
 

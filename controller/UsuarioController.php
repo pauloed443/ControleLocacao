@@ -2,7 +2,8 @@
 namespace controller;
 
 require_once $_SERVER['DOCUMENT_ROOT'] . "/ControleLocacao/dao/conexao.php";
-require_once $_SERVER['DOCUMENT_ROOT'] . "/ControleLocacao/dao/UsuarioDao.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "\ControleLocacao\model\Usuario.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "\ControleLocacao\dao\UsuarioDao.php";
 
 class UsuarioController {
 	
@@ -12,6 +13,21 @@ class UsuarioController {
 
 		//$db = new \conexao\Conexao();
 
+	}
+
+	public function salvar($Login, $Nome, $Email, $Senha, $idGrupoUsuario)
+	{
+		
+		$usuario = new \model\Usuario();
+		$usuario->setLogin($Login);
+		$usuario->setNome($Nome);
+		$usuario->setEmail($Email);
+		$usuario->setSenha($Senha);
+		$usuario->setIdGrupoUsuario($idGrupoUsuario);
+
+		$usuarioDao = new \dao\UsuarioDao();
+		$usuarioDao->salvar($usuario);
+		
 	}
 
 	public function pegaUsuario($id)

@@ -10,7 +10,7 @@ class Conexao {
 	private $pass = '';
 
 	public function __construct() {
-
+		$this->getInstance();
 	}
 
 	public static function getInstance() {
